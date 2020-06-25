@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 @testable import hbslib
 
 final class hbslibTests: XCTestCase {
@@ -7,6 +8,11 @@ final class hbslibTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
         XCTAssertEqual(hbslib().text, "Hello, World!")
+        
+        let v = UIView()
+        let outer = UIView()
+        outer.addSubview(v)
+        v.applyAutolayoutHugging()
     }
 
     static var allTests = [
