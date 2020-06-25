@@ -14,6 +14,9 @@ final class hbslibTests: XCTestCase {
         let outer = UIView()
         outer.addSubview(v)
         v.applyAutolayoutHugging()
+        
+        let arr = [1, 1, 2, 3, 5]
+        XCTAssertNotEqual(arr, arr.unique())
     }
 
     @available(iOS 9.0, *)
