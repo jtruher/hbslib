@@ -5,6 +5,7 @@ struct hbslib {
 }
 
 extension UIView {
+    @available(iOS 9.0, *)
     func applyAutolayoutHugging() {
         if let sv = self.superview {
             self.translatesAutoresizingMaskIntoConstraints = false
