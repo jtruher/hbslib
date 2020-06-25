@@ -4,7 +4,7 @@ struct hbslib {
     var text = "Hello, World!"
 }
 
-extension UIView {
+public extension UIView {
     @available(iOS 9.0, *)
     func applyAutolayoutHugging() {
         if let sv = self.superview {
@@ -20,7 +20,7 @@ extension UIView {
     }
 }
 
-extension UIImage {
+public extension UIImage {
     func toBase64() -> String? {
         guard let imageData = self.pngData() else { return nil }
         return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
