@@ -20,6 +20,12 @@ public extension UIView {
     }
 }
 
+public extension UIColor {
+    static func randomColor() -> UIColor {
+        return UIColor.init(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
+    }
+}
+
 public extension UIImage {
     func toBase64() -> String? {
         guard let imageData = self.pngData() else { return nil }
