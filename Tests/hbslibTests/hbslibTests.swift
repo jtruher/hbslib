@@ -17,6 +17,8 @@ final class hbslibTests: XCTestCase {
         
         let arr = [1, 1, 2, 3, 5]
         XCTAssertNotEqual(arr, arr.unique())
+        
+        XCTAssertNotEqual(UIColor.randomColor(), UIColor.randomColor())
     }
 
     @available(iOS 9.0, *)
