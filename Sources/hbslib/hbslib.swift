@@ -13,8 +13,8 @@ public extension UIView {
             NSLayoutConstraint.activate([
                 self.topAnchor.constraint(equalTo: sv.topAnchor),
                 self.bottomAnchor.constraint(equalTo: sv.bottomAnchor),
-                self.leftAnchor.constraint(equalTo: sv.leftAnchor),
-                self.rightAnchor.constraint(equalTo: sv.rightAnchor),
+                self.leadingAnchor.constraint(equalTo: sv.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: sv.trailingAnchor),
             ])
         }
     }
@@ -159,5 +159,17 @@ public final class ScaledFont {
 
         let fontMetrics = UIFontMetrics(forTextStyle: textStyle)
         return fontMetrics.scaledFont(for: font)
+    }
+}
+
+extension String {
+    func deletingPrefix(_ prefix: String) -> String {
+        guard self.hasPrefix(prefix) else { return self }
+        return String(self.dropFirst(prefix.count))
+    }
+    
+    func deletingSuffix(_ suffix: String) -> String {
+        guard self.hasSuffix(suffix) else { return self }
+        return String(self.dropLast(suffix.count))
     }
 }
