@@ -115,7 +115,7 @@ public class CellularAutomata {
 }
 
 extension CellularAutomata: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var ret = ""
         
         for x in 0...grid.width - 1 {
