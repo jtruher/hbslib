@@ -1,4 +1,3 @@
-
 //
 //  CellularAutomata.swift
 //  gomoku
@@ -14,117 +13,108 @@ public enum Border {
 }
 
 public class CellularAutomata {
-    
+
     var grid = Grid<Int>(width: 1, height: 1, sentinel: 0)
     var gridBuffer = Grid<Int>(width: 1, height: 1, sentinel: 0)
-    
+
     var rulesBirth = [Int]()
     var rulesSurvive = [Int]()
-    
-    var borderMode : Border = .live
-    
-    var fillPercent : Float = 0.5
-    
+
+    var borderMode: Border = .live
+
+    var fillPercent: Float = 0.5
+
     init(width: Int, height: Int) {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)
 
-        self.rulesSurvive = [3,4,5,6,7,8,0,0,0]
-        self.rulesBirth = [6,7,8,0,0,0,0,0,0]
+        self.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
+        self.rulesBirth = [6, 7, 8, 0, 0, 0, 0, 0, 0]
     }
-    
-    
-    func processCell(x : Int, y : Int) {
+
+    func processCell(row: Int, col: Int) {
         var around = 0
         var alive = 0
-        
+
         for dy in -1...2 {
             for dx in -1...2 {
-                var cellX = dx + x
-                var cellY = dy + y
-                
+                var cellX = dx + row
+                var cellY = dy + col
+
                 if dx == 0 && dy == 0 {
                     continue
                 }
-                
+
                 if cellX < 0 || cellX >= grid.width {
                     if borderMode == .wrap {
                         cellX = (cellX + grid.width) % grid.width
                     } else if borderMode == .live {
                         around += 1
                         continue
-                    } else {
-                        continue
                     }
                 }
-                
+
                 if cellY < 0 || cellY >= grid.height {
                     if borderMode == .wrap {
                         cellY = (cellY + grid.height) % grid.height
                     } else if borderMode == .live {
                         around += 1
                         continue
-                    } else {
-                        continue
                     }
                 }
-                
+
                 if grid[cellX, cellY] != 0 {
                     around += 1
                 }
             }
         }
-        
-        if grid[x, y] == 1 {
-            for i in 0...8 {
-                if around == rulesSurvive[i] {
-                    alive = 1
-                    break
-                }
+
+        if grid[row, col] == 1 {
+            for idx in 0...8 where around == rulesSurvive[idx] {
+                alive = 1
+                break
             }
         } else {
-            for i in 0...8 {
-                if around == rulesBirth[i] {
-                    alive = 1
-                    break
-                }
+            for idx in 0...8 where around == rulesBirth[idx] {
+                alive = 1
+                break
             }
         }
-        
-        gridBuffer[x, y] = alive
+
+        gridBuffer[row, col] = alive
     }
-    
+
     func stepCells() {
-        gridBuffer = gridBuffer * 0
-        
-        grid.eachCell { (x, y) in
-            self.processCell(x: x, y: y)
+        gridBuffer *= 0
+
+        grid.eachCell { (row, col) in
+            self.processCell(row: row, col: col)
         }
-        
+
         grid = gridBuffer
-        
+
     }
-    
+
     func resetRandom() {
-        grid.eachCell { (x, y) in
+        grid.eachCell { (row, col) in
             //            cells[x][y] = ((rand() >> 8) % 100) < fill_percent;
-            self.grid[x, y] = Float.random(in: 0...1) < self.fillPercent ? 0 : 1
+            self.grid[row, col] = Float.random(in: 0...1) < self.fillPercent ? 0 : 1
         }
     }
-    
+
 }
 
 extension CellularAutomata: CustomStringConvertible {
     public var description: String {
         var ret = ""
-        
-        for x in 0...grid.width - 1 {
-            for y in 0...grid.height - 1 {
-                ret += "\(grid[x, y] == 1 ? "X" : " ")"
+
+        for row in 0...grid.width - 1 {
+            for col in 0...grid.height - 1 {
+                ret += "\(grid[row, col] == 1 ? "X" : " ")"
             }
             ret += "\n"
         }
-        
+
         return ret
     }
 }

@@ -1,28 +1,37 @@
 import UIKit
 
-struct hbslib {
-    var text = "Hello, World!"
-}
-
 public extension UIView {
     @available(iOS 9.0, *)
     func applyAutolayoutHugging() {
-        if let sv = self.superview {
+        if let subview = self.superview {
             self.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                self.topAnchor.constraint(equalTo: sv.topAnchor),
-                self.bottomAnchor.constraint(equalTo: sv.bottomAnchor),
-                self.leadingAnchor.constraint(equalTo: sv.leadingAnchor),
-                self.trailingAnchor.constraint(equalTo: sv.trailingAnchor),
+                self.topAnchor.constraint(equalTo: subview.topAnchor),
+                self.bottomAnchor.constraint(equalTo: subview.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: subview.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: subview.trailingAnchor)
             ])
         }
     }
 }
 
 public extension UIColor {
+    /// randomColor generates a random color.
+    /// - Returns: a random UIColor.
     static func randomColor() -> UIColor {
-        return UIColor.init(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
+        return UIColor.init(red: CGFloat.random(in: 0...1),
+                            green: CGFloat.random(in: 0...1),
+                            blue: CGFloat.random(in: 0...1),
+                            alpha: 1.0)
+    }
+
+    @available(iOS 10.0, *)
+    func randomP3Color() -> UIColor {
+        return UIColor.init(displayP3Red: CGFloat.random(in: 0...1),
+                            green: CGFloat.random(in: 0...1),
+                            blue: CGFloat.random(in: 0...1),
+                            alpha: 1.0)
     }
 }
 
@@ -31,7 +40,7 @@ public extension String {
         guard self.hasPrefix(prefix) else { return self }
         return String(self.dropFirst(prefix.count))
     }
-    
+
     func deletingSuffix(_ suffix: String) -> String {
         guard self.hasSuffix(suffix) else { return self }
         return String(self.dropLast(suffix.count))
@@ -43,11 +52,11 @@ public extension UIImage {
         guard let imageData = self.pngData() else { return nil }
         return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
     }
-    
-    static func convertBase64StringToImage(imageBase64String : String) -> UIImage {
+
+    static func convertBase64StringToImage(imageBase64String: String) -> UIImage {
         let imageData = Data.init(base64Encoded: imageBase64String, options: .init(rawValue: 0))
         let image = UIImage(data: imageData!)
-        
+
         return image!
     }
 }
@@ -174,3 +183,22 @@ public final class ScaledFont {
     }
 }
 
+struct HBSLib {
+    var text = "Hello, World!"
+}
+
+public extension Comparable {
+
+    /// Clamps a `Comparable` between `lower` and `upper`.
+    /// It is expected that lower is less than upper.
+    /// - Parameters:
+    ///   - lower: a lower bound for clamping
+    ///   - upper: an upper bound for clamping
+    /// - Returns: The clamped value.
+    func clamp<T: Comparable>(lower: T, _ upper: T) -> T {
+        if let val = self as? T {
+            return min(max(val, lower), upper)
+        }
+        return lower
+    }
+}
