@@ -15,16 +15,16 @@ public enum Border {
 public class CellularAutomata {
 
     var grid = Grid<Int>(width: 1, height: 1, sentinel: 0)
-    var gridBuffer = Grid<Int>(width: 1, height: 1, sentinel: 0)
+    private var gridBuffer = Grid<Int>(width: 1, height: 1, sentinel: 0)
 
-    var rulesBirth = [Int]()
-    var rulesSurvive = [Int]()
+    public var rulesBirth = [Int]()
+    public var rulesSurvive = [Int]()
 
-    var borderMode: Border = .live
+    public var borderMode: Border = .live
 
-    var fillPercent: Float = 0.5
+    public var fillPercent: Float = 0.5
 
-    init(width: Int, height: Int) {
+    public init(width: Int, height: Int) {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)
 
@@ -32,16 +32,16 @@ public class CellularAutomata {
         self.rulesBirth = [6, 7, 8, 0, 0, 0, 0, 0, 0]
     }
 
-    func processCell(row: Int, col: Int) {
+    private func processCell(row: Int, col: Int) {
         var around = 0
         var alive = 0
 
-        for dy in -1...2 {
-            for dx in -1...2 {
-                var cellX = dx + row
-                var cellY = dy + col
+        for deltaX in -1...2 {
+            for deltaY in -1...2 {
+                var cellX = deltaY + row
+                var cellY = deltaX + col
 
-                if dx == 0 && dy == 0 {
+                if deltaY == 0 && deltaX == 0 {
                     continue
                 }
 
@@ -84,7 +84,7 @@ public class CellularAutomata {
         gridBuffer[row, col] = alive
     }
 
-    func stepCells() {
+    public func stepCells() {
         gridBuffer *= 0
 
         grid.eachCell { (row, col) in
@@ -95,7 +95,7 @@ public class CellularAutomata {
 
     }
 
-    func resetRandom() {
+    public func resetRandom() {
         grid.eachCell { (row, col) in
             //            cells[x][y] = ((rand() >> 8) % 100) < fill_percent;
             self.grid[row, col] = Float.random(in: 0...1) < self.fillPercent ? 0 : 1
