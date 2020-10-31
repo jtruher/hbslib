@@ -16,7 +16,7 @@ public class Grid <Element> : Equatable where Element: Numeric, Element: Compara
     var height: Int = 0
     var sentinel: Element
 
-    init(width: Int, height: Int, sentinel: Element) {
+    public init(width: Int, height: Int, sentinel: Element) {
         self.width = width
         self.height = height
         self.sentinel = sentinel
