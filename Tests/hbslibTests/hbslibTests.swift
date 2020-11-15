@@ -18,7 +18,14 @@ final class HBSLibTests: XCTestCase {
         let arr = [1, 1, 2, 3, 5]
         XCTAssertNotEqual(arr, arr.unique())
 
+        XCTAssertNotNil(UIColor.randomColor())
         XCTAssertNotEqual(UIColor.randomColor(), UIColor.randomColor())
+    }
+
+    @available(iOS 13.0, *)
+    func testP3ColorRandom() {
+        XCTAssertNotNil(UIColor.randomP3Color())
+        XCTAssertNotEqual(UIColor.randomP3Color(), UIColor.randomP3Color())
     }
 
     func testGrid() {

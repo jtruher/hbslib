@@ -32,6 +32,10 @@ public extension UIFont {
     func italic() -> UIFont {
         return withTraits(traits: .traitItalic)
     }
+
+    static func preferredFootnote() -> UIFont {
+        return UIFont.preferredFont(forTextStyle: .footnote)
+    }
 }
 
 public extension UIColor {
@@ -45,7 +49,7 @@ public extension UIColor {
     }
 
     @available(iOS 10.0, *)
-    func randomP3Color() -> UIColor {
+    static func randomP3Color() -> UIColor {
         return UIColor.init(displayP3Red: CGFloat.random(in: 0...1),
                             green: CGFloat.random(in: 0...1),
                             blue: CGFloat.random(in: 0...1),
