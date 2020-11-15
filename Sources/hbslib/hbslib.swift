@@ -33,9 +33,19 @@ public extension UIFont {
         return withTraits(traits: .traitItalic)
     }
 
-    static func preferredFootnote() -> UIFont {
+    static func footnote() -> UIFont {
         return UIFont.preferredFont(forTextStyle: .footnote)
     }
+
+    @available(iOS 11.0, *)
+    static func largeTitle() -> UIFont {
+        return UIFont.preferredFont(forTextStyle: .largeTitle)
+    }
+
+    static func body() -> UIFont {
+        return UIFont.preferredFont(forTextStyle: .body)
+    }
+
 }
 
 public extension UIColor {
