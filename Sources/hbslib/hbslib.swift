@@ -65,6 +65,45 @@ class ClosureWrapper: NSObject {
     }
 }
 
+import GameplayKit
+
+/// Make a random seed and store in a database
+///
+///  ```
+///  let seed = UInt64.random(in: UInt64.min ... UInt64.max)
+///  var generator = Generator(seed: seed)
+///  ```
+///
+/// Or if you just need the seeding ability for testing,
+///
+/// ```
+/// var generator = Generator()
+/// ```
+/// uses a default seed of 0
+///
+/// ```
+/// let chars = ['a','b','c','d','e','f']`
+/// let randomChar = chars.randomElement(using: &generator)
+/// let randomInt = Int.random(in: 0 ..< 1000, using: &generator)
+/// ```
+class SeededGenerator: RandomNumberGenerator {
+    let seed: UInt64
+    private let generator: GKMersenneTwisterRandomSource
+    convenience init() {
+        self.init(seed: 0)
+    }
+    init(seed: UInt64) {
+        self.seed = seed
+        generator = GKMersenneTwisterRandomSource(seed: seed)
+    }
+    func next<T>(upperBound: T) -> T where T: FixedWidthInteger, T: UnsignedInteger {
+        return T(abs(generator.nextInt(upperBound: Int(upperBound))))
+    }
+    func next<T>() -> T where T: FixedWidthInteger, T: UnsignedInteger {
+        return T(abs(generator.nextInt()))
+    }
+}
+
 extension UIButton {
     private struct AssociatedKeys {
         static var targetClosure = "targetClosure"

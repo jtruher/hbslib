@@ -32,6 +32,28 @@ public class CellularAutomata {
         self.rulesBirth = [6, 7, 8, 0, 0, 0, 0, 0, 0]
     }
 
+    private func handleCell(cellX: inout Int, cellY: inout Int, around: inout Int) {
+        if cellX < 0 || cellX >= grid.width {
+            if borderMode == .wrap {
+                cellX = (cellX + grid.width) % grid.width
+            } else if borderMode == .live {
+                around += 1
+            }
+        }
+
+        if cellY < 0 || cellY >= grid.height {
+            if borderMode == .wrap {
+                cellY = (cellY + grid.height) % grid.height
+            } else if borderMode == .live {
+                around += 1
+            }
+        }
+
+        if grid[cellX, cellY] != 0 {
+            around += 1
+        }
+    }
+
     private func processCell(row: Int, col: Int) {
         var around = 0
         var alive = 0
@@ -45,27 +67,29 @@ public class CellularAutomata {
                     continue
                 }
 
-                if cellX < 0 || cellX >= grid.width {
-                    if borderMode == .wrap {
-                        cellX = (cellX + grid.width) % grid.width
-                    } else if borderMode == .live {
-                        around += 1
-                        continue
-                    }
-                }
+                handleCell(cellX: &cellX, cellY: &cellY, around: &around)
 
-                if cellY < 0 || cellY >= grid.height {
-                    if borderMode == .wrap {
-                        cellY = (cellY + grid.height) % grid.height
-                    } else if borderMode == .live {
-                        around += 1
-                        continue
-                    }
-                }
-
-                if grid[cellX, cellY] != 0 {
-                    around += 1
-                }
+//                if cellX < 0 || cellX >= grid.width {
+//                    if borderMode == .wrap {
+//                        cellX = (cellX + grid.width) % grid.width
+//                    } else if borderMode == .live {
+//                        around += 1
+//                        continue
+//                    }
+//                }
+//
+//                if cellY < 0 || cellY >= grid.height {
+//                    if borderMode == .wrap {
+//                        cellY = (cellY + grid.height) % grid.height
+//                    } else if borderMode == .live {
+//                        around += 1
+//                        continue
+//                    }
+//                }
+//
+//                if grid[cellX, cellY] != 0 {
+//                    around += 1
+//                }
             }
         }
 
