@@ -32,6 +32,21 @@ public class CellularAutomata {
         self.rulesBirth = [6, 7, 8, 0, 0, 0, 0, 0, 0]
     }
 
+    func indexIsValid(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < grid.width && column >= 0 && column < grid.height
+    }
+
+    public subscript(row: Int, column: Int) -> Int {
+        get {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            return grid[row, column]
+        }
+        set {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            grid[row, column] = newValue
+        }
+    }
+
     private func handleCell(cellX: inout Int, cellY: inout Int, around: inout Int) {
         if cellX < 0 || cellX >= grid.width {
             if borderMode == .wrap {
