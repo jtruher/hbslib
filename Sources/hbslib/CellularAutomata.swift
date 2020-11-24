@@ -24,6 +24,13 @@ public class CellularAutomata {
 
     public var fillPercent: Float = 0.5
 
+    public var width: Int {
+        grid.width
+    }
+    public var height: Int {
+        grid.height
+    }
+    
     public init(width: Int, height: Int) {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)
