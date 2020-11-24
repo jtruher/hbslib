@@ -138,7 +138,14 @@ public class CellularAutomata {
         }
 
         grid = gridBuffer
-
+    }
+    
+    public func eachCell(_ completion: @escaping (_ x: Int, _ y: Int, _ value: Int) -> Void) {
+        for row in 0 ..< width {
+            for col in 0 ..< height {
+                completion(row, col, grid[row, col])
+            }
+        }
     }
 
     public func resetRandom() {
