@@ -56,15 +56,6 @@ public extension UIFont {
 
 }
 
-typealias UIButtonTargetClosure = (UIButton) -> Void
-
-class ClosureWrapper: NSObject {
-    let closure: UIButtonTargetClosure
-    init(_ closure: @escaping UIButtonTargetClosure) {
-        self.closure = closure
-    }
-}
-
 import GameplayKit
 
 /// Make a random seed and store in a database
@@ -104,6 +95,16 @@ class SeededGenerator: RandomNumberGenerator {
     }
 }
 
+
+public typealias UIButtonTargetClosure = (UIButton) -> Void
+
+public class ClosureWrapper: NSObject {
+    let closure: UIButtonTargetClosure
+    init(_ closure: @escaping UIButtonTargetClosure) {
+        self.closure = closure
+    }
+}
+
 extension UIButton {
     private struct AssociatedKeys {
         static var targetClosure = "targetClosure"
@@ -124,7 +125,7 @@ extension UIButton {
         }
     }
 
-    func addTargetClosure(closure: @escaping UIButtonTargetClosure) {
+    public func addTargetClosure(closure: @escaping UIButtonTargetClosure) {
         targetClosure = closure
         addTarget(self, action: #selector(UIButton.closureAction), for: .touchUpInside)
     }
