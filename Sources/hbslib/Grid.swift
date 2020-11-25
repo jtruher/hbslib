@@ -28,7 +28,7 @@ public class Grid <Element> : Equatable where Element: Numeric, Element: Compara
         return row >= 0 && row < width && column >= 0 && column < height
     }
 
-    subscript(row: Int, column: Int) -> Element {
+    public subscript(row: Int, column: Int) -> Element {
         get {
             assert(indexIsValid(row: row, column: column), "Index out of range")
             return tiles[(row * height) + column]
