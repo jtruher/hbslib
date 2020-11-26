@@ -60,6 +60,7 @@ public class CellularAutomata {
                 cellX = (cellX + grid.width) % grid.width
             } else if borderMode == .live {
                 around += 1
+                return
             }
         }
 
@@ -68,6 +69,7 @@ public class CellularAutomata {
                 cellY = (cellY + grid.height) % grid.height
             } else if borderMode == .live {
                 around += 1
+                return
             }
         }
 
