@@ -19,7 +19,7 @@ class CellularAutomataTests: XCTestCase {
     }
 
     func testBasicAutomata() throws {
-        let automata = CellularAutomata(width: 20, height: 20)
+        let automata = CellularAutomata(width: 4, height: 4)
 
         automata.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
         automata.rulesBirth =   [6, 7, 8, 0, 0, 0, 0, 0, 0]
@@ -32,13 +32,61 @@ class CellularAutomataTests: XCTestCase {
         print(automata)
         automata.stepCells()
         print(automata)
+//        print("-----------------")
+
+        for _ in 0...50 {
+            automata.stepCells()
+//            print("-----------------")
+        }
+
+    }
+
+    func testDeadAutomata() throws {
+        let automata = CellularAutomata(width: 4, height: 4)
+        automata.borderMode = .dead
+        automata.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
+        automata.rulesBirth =   [6, 7, 8, 0, 0, 0, 0, 0, 0]
+
+//        print(automata)
+//        print("-----------------")
+
+        automata.resetRandom()
+
+        print(automata)
+        print("-----------------")
+
+        automata.stepCells()
+        print(automata)
         print("-----------------")
 
 //        for _ in 0...50 {
 //            automata.stepCells()
 //            print("-----------------")
+//            print(automata)
 //        }
 
     }
+    func testWrapAutomata() throws {
+        let automata = CellularAutomata(width: 8, height: 8)
+        automata.borderMode = .wrap
+        automata.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
+        automata.rulesBirth =   [6, 7, 8, 0, 0, 0, 0, 0, 0]
 
+        print(automata)
+        print("-----------------")
+
+        automata.resetRandom()
+
+        print(automata)
+        automata.stepCells()
+        print(automata)
+        print("-----------------")
+        for _ in 0...50 {
+            automata.stepCells()
+//            print("-----------------")
+        }
+
+    }
+
+    
 }

@@ -73,7 +73,7 @@ public class CellularAutomata {
             }
         }
 
-        if grid[cellX, cellY] != 0 {
+        if (cellX >= 0 && cellX < grid.width) && (cellY >= 0 && cellY < grid.height) && grid[cellX, cellY] != 0 {
             around += 1
         }
     }
