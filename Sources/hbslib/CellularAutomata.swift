@@ -139,7 +139,7 @@ public class CellularAutomata {
             self.processCell(row: row, col: col)
         }
 
-        grid = gridBuffer
+        grid.tiles = gridBuffer.tiles
     }
     
     public func eachCell(_ completion: @escaping (_ x: Int, _ y: Int, _ value: Int) -> Void) {

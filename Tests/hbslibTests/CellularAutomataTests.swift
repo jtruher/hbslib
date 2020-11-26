@@ -18,6 +18,14 @@ class CellularAutomataTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    static let debugPrinting = true
+    
+    func debugPrint(_ item: Any) {
+        if CellularAutomataTests.debugPrinting == true {
+            print(String(describing: item))
+        }
+    }
+    
     func testBasicAutomata() throws {
         let automata = CellularAutomata(width: 4, height: 4)
 
@@ -38,7 +46,6 @@ class CellularAutomataTests: XCTestCase {
             automata.stepCells()
 //            print("-----------------")
         }
-
     }
 
     func testDeadAutomata() throws {
@@ -55,15 +62,15 @@ class CellularAutomataTests: XCTestCase {
         print(automata)
         print("-----------------")
 
-        automata.stepCells()
-        print(automata)
-        print("-----------------")
-
-//        for _ in 0...50 {
-//            automata.stepCells()
-//            print("-----------------")
-//            print(automata)
-//        }
+//        automata.stepCells()
+//        print(automata)
+//        print("-----------------")
+//
+        for _ in 0...50 {
+            automata.stepCells()
+            print("-----------------")
+            print(automata)
+        }
 
     }
     func testWrapAutomata() throws {
