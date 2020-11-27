@@ -118,14 +118,18 @@ public class CellularAutomata {
         }
 
         if grid[row, col] == 1 {
-            for idx in 0...rulesSurvive.count - 1 where around == rulesSurvive[idx] {
-                alive = 1
-                break
+            if rulesSurvive.count > 0 {
+                for idx in 0...rulesSurvive.count - 1 where around == rulesSurvive[idx] {
+                    alive = 1
+                    break
+                }
             }
         } else {
-            for idx in 0...rulesBirth.count - 1 where around == rulesBirth[idx] {
-                alive = 1
-                break
+            if rulesBirth.count > 0 {
+                for idx in 0...rulesBirth.count - 1 where around == rulesBirth[idx] {
+                    alive = 1
+                    break
+                }
             }
         }
 
@@ -161,7 +165,8 @@ public class CellularAutomata {
 
 extension CellularAutomata: CustomStringConvertible {
     public var description: String {
-        var ret = ""
+        var ret = String.init(repeating: "-", count: grid.height)
+        ret += "\n"
 
         for row in 0...grid.width - 1 {
             for col in 0...grid.height - 1 {
@@ -169,6 +174,8 @@ extension CellularAutomata: CustomStringConvertible {
             }
             ret += "\n"
         }
+        
+        ret.append(String.init(repeating: "=", count: grid.height))
 
         return ret
     }

@@ -35,7 +35,6 @@ class CellularAutomataTests: XCTestCase {
             automata.stepCells()
         }
     }
-
     
     func testBasicAutomata() throws {
         let automata = CellularAutomata(width: 4, height: 4)
@@ -103,7 +102,29 @@ class CellularAutomataTests: XCTestCase {
             automata.stepCells()
 //            print("-----------------")
         }
+    }
 
+    func testSimple1Automata() throws {
+        let automata = CellularAutomata(width: 8, height: 4)
+
+        print(automata)
+        
+//        automata.resetRandom()
+
+        automata[1, 1] = 1
+        
+        print(automata)
+
+        automata.borderMode = .dead
+        automata.rulesSurvive = [0, 1, 2]
+        automata.rulesBirth = [1]
+
+        automata.stepCells()
+        
+        print(automata)
+//        for _ in 0...50 {
+//            automata.stepCells()
+//        }
     }
 
     
