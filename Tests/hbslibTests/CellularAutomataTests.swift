@@ -105,26 +105,29 @@ class CellularAutomataTests: XCTestCase {
     }
 
     func testSimple1Automata() throws {
-        let automata = CellularAutomata(width: 8, height: 4)
+        let automata = CellularAutomata(width: 8, height: 8)
 
-        print(automata)
-        
+//        automata[1, 1] = 1
+//        automata[2, 1] = 1
+
+        automata.borderMode = .wrap
+        automata.rulesSurvive = [2, 3]
+        automata.rulesBirth = [3]
+        automata.fillPercent = 0.1
 //        automata.resetRandom()
-
-        automata[1, 1] = 1
         
         print(automata)
-
-        automata.borderMode = .dead
-        automata.rulesSurvive = [0, 1, 2]
-        automata.rulesBirth = [1]
-
         automata.stepCells()
-        
         print(automata)
-//        for _ in 0...50 {
-//            automata.stepCells()
-//        }
+
+        for idx in 1...50 {
+            automata.stepCells()
+            print(automata)
+            
+            if idx % 10 == 0 {
+                automata.resetRandom()
+            }
+        }
     }
 
     

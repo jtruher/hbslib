@@ -16,6 +16,7 @@ public class CellularAutomata {
 
     var grid = Grid<Int>(width: 1, height: 1, sentinel: 0)
     private var gridBuffer = Grid<Int>(width: 1, height: 1, sentinel: 0)
+    private var gridCounts = Grid<Int>(width: 1, height: 1, sentinel: 0)
 
     public var rulesBirth = [Int]()
     public var rulesSurvive = [Int]()
@@ -34,6 +35,7 @@ public class CellularAutomata {
     public init(width: Int, height: Int) {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)
+        self.gridCounts = Grid<Int>(width: width, height: height, sentinel: 0)
 
         self.rulesSurvive = [3, 4, 5, 6, 7, 8]
         self.rulesBirth = [6, 7, 8]
@@ -78,6 +80,36 @@ public class CellularAutomata {
         }
     }
 
+    func cellAt(row: Int, col: Int, offsetX: Int, offsetY: Int) -> Int {
+        var cellX = offsetX + row
+        var cellY = offsetY + col
+
+        if cellX < 0 || cellX >= grid.width {
+            if borderMode == .wrap {
+                cellX = (cellX + grid.width) % grid.width
+            } else if borderMode == .live {
+                return 1
+            } else {
+                return 0
+            }
+        }
+
+        if cellY < 0 || cellY >= grid.height {
+            if borderMode == .wrap {
+                cellY = (cellY + grid.height) % grid.height
+            } else if borderMode == .live {
+                return 1
+            } else {
+                return 0
+            }
+        }
+//        if (cellX >= 0 && cellX < grid.width) && (cellY >= 0 && cellY < grid.height) && grid[cellX, cellY] != 0 {
+//
+//        }
+        
+        return grid[cellX, cellY]
+    }
+    
     private func processCell(row: Int, col: Int) {
         var around = 0
         var alive = 0
@@ -90,8 +122,11 @@ public class CellularAutomata {
                 if deltaY == 0 && deltaX == 0 {
                     continue
                 }
+                
+                around += cellAt(row: row, col: col, offsetX: deltaX, offsetY: deltaY)
+                gridCounts[row, col] += around
 
-                handleCell(cellX: &cellX, cellY: &cellY, around: &around)
+//                handleCell(cellX: &cellX, cellY: &cellY, around: &around)
 
 //                if cellX < 0 || cellX >= grid.width {
 //                    if borderMode == .wrap {
@@ -118,30 +153,39 @@ public class CellularAutomata {
         }
 
         if grid[row, col] == 1 {
-            if rulesSurvive.count > 0 {
-                for idx in 0...rulesSurvive.count - 1 where around == rulesSurvive[idx] {
-                    alive = 1
-                    break
-                }
+            if rulesSurvive.contains(around) {
+                alive = 1
             }
+//            if rulesSurvive.count > 0 {
+//                for idx in 0...rulesSurvive.count - 1 where around == rulesSurvive[idx] {
+//                    alive = 1
+//                    break
+//                }
+//            }
         } else {
-            if rulesBirth.count > 0 {
-                for idx in 0...rulesBirth.count - 1 where around == rulesBirth[idx] {
-                    alive = 1
-                    break
-                }
+            if rulesBirth.contains(around) {
+                alive = 1
             }
+//            if rulesBirth.count > 0 {
+//                for idx in 0...rulesBirth.count - 1 where around == rulesBirth[idx] {
+//                    alive = 1
+//                    break
+//                }
+//            }
         }
 
         gridBuffer[row, col] = alive
     }
-
+    
     public func stepCells() {
         gridBuffer *= 0
-
+        gridCounts *= 0
+        
         grid.eachCell { (row, col) in
             self.processCell(row: row, col: col)
         }
+        
+        print(gridCounts)
 
         grid.tiles = gridBuffer.tiles
     }
@@ -157,7 +201,7 @@ public class CellularAutomata {
     public func resetRandom() {
         grid.eachCell { (row, col) in
             //            cells[x][y] = ((rand() >> 8) % 100) < fill_percent;
-            self.grid[row, col] = Float.random(in: 0...1) < self.fillPercent ? 0 : 1
+            self.grid[row, col] = Float.random(in: 0...1) < self.fillPercent ? 1 : 0
         }
     }
 
@@ -167,6 +211,7 @@ extension CellularAutomata: CustomStringConvertible {
     public var description: String {
         var ret = String.init(repeating: "-", count: grid.height)
         ret += "\n"
+        ret += "Survive:\t\(rulesSurvive)\nBirth:\t\t\(rulesBirth)\n"
 
         for row in 0...grid.width - 1 {
             for col in 0...grid.height - 1 {
