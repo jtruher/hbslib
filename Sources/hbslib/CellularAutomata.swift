@@ -35,8 +35,8 @@ public class CellularAutomata {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)
 
-        self.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
-        self.rulesBirth = [6, 7, 8, 0, 0, 0, 0, 0, 0]
+        self.rulesSurvive = [3, 4, 5, 6, 7, 8]
+        self.rulesBirth = [6, 7, 8]
     }
 
     func indexIsValid(row: Int, column: Int) -> Bool {
@@ -118,12 +118,12 @@ public class CellularAutomata {
         }
 
         if grid[row, col] == 1 {
-            for idx in 0...8 where around == rulesSurvive[idx] {
+            for idx in 0...rulesSurvive.count - 1 where around == rulesSurvive[idx] {
                 alive = 1
                 break
             }
         } else {
-            for idx in 0...8 where around == rulesBirth[idx] {
+            for idx in 0...rulesBirth.count - 1 where around == rulesBirth[idx] {
                 alive = 1
                 break
             }

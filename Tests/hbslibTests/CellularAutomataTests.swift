@@ -26,11 +26,22 @@ class CellularAutomataTests: XCTestCase {
         }
     }
     
+    func testDefaultAutomata() throws {
+        let automata = CellularAutomata(width: 16, height: 16)
+
+        automata.resetRandom()
+
+        for _ in 0...50 {
+            automata.stepCells()
+        }
+    }
+
+    
     func testBasicAutomata() throws {
         let automata = CellularAutomata(width: 4, height: 4)
 
-        automata.rulesSurvive = [3, 4, 5, 6, 7, 8, 0, 0, 0]
-        automata.rulesBirth =   [6, 7, 8, 0, 0, 0, 0, 0, 0]
+        automata.rulesSurvive = [3, 4, 5, 6, 7, 8]
+        automata.rulesBirth =   [6, 7, 8]
 
         print(automata)
         print("-----------------")
