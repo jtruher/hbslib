@@ -114,8 +114,8 @@ public class CellularAutomata {
         var around = 0
         var alive = 0
 
-        for deltaX in -1...2 {
-            for deltaY in -1...2 {
+        for deltaX in -1...1 {
+            for deltaY in -1...1 {
                 var cellX = deltaY + row
                 var cellY = deltaX + col
 
@@ -124,7 +124,6 @@ public class CellularAutomata {
                 }
                 
                 around += cellAt(row: row, col: col, offsetX: deltaX, offsetY: deltaY)
-                gridCounts[row, col] += around
 
 //                handleCell(cellX: &cellX, cellY: &cellY, around: &around)
 
@@ -151,7 +150,9 @@ public class CellularAutomata {
 //                }
             }
         }
-
+//        print("adding \(around) to \(row),\(col)")
+        gridCounts[row, col] += around
+        
         if grid[row, col] == 1 {
             if rulesSurvive.contains(around) {
                 alive = 1
@@ -185,7 +186,7 @@ public class CellularAutomata {
             self.processCell(row: row, col: col)
         }
         
-        print(gridCounts)
+//        print(gridCounts)
 
         grid.tiles = gridBuffer.tiles
     }
@@ -212,7 +213,8 @@ extension CellularAutomata: CustomStringConvertible {
         var ret = String.init(repeating: "-", count: grid.height)
         ret += "\n"
         ret += "Survive:\t\(rulesSurvive)\nBirth:\t\t\(rulesBirth)\n"
-
+        ret += "Border: \(borderMode)\n"
+        
         for row in 0...grid.width - 1 {
             for col in 0...grid.height - 1 {
                 ret += "\(grid[row, col] == 1 ? "X" : " ")"

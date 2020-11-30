@@ -110,11 +110,17 @@ class CellularAutomataTests: XCTestCase {
 //        automata[1, 1] = 1
 //        automata[2, 1] = 1
 
+        for deltaX in -1...1 {
+            for deltaY in -1...1 {
+                print("\(deltaX), \(deltaY)")
+            }
+        }
+        
         automata.borderMode = .wrap
         automata.rulesSurvive = [2, 3]
         automata.rulesBirth = [3]
         automata.fillPercent = 0.1
-//        automata.resetRandom()
+        automata.resetRandom()
         
         print(automata)
         automata.stepCells()
@@ -130,5 +136,30 @@ class CellularAutomataTests: XCTestCase {
         }
     }
 
-    
+    func testSimple2Automata() throws {
+        let automata = CellularAutomata(width: 8, height: 8)
+
+//        automata[1, 1] = 1
+        automata[2, 1] = 1
+        
+        automata.borderMode = .wrap
+        automata.rulesSurvive = [2, 3]
+        automata.rulesBirth = [3]
+        automata.fillPercent = 0.2
+        automata.resetRandom()
+        
+        print(automata)
+        automata.stepCells()
+        print(automata)
+
+        for idx in 1...50 {
+            automata.stepCells()
+            print(automata)
+            
+            if idx % 10 == 0 {
+                automata.resetRandom()
+            }
+        }
+    }
+
 }
