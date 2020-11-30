@@ -42,10 +42,9 @@ protocol GameCenterFeedback {
 
 class Game: Codable, GameCenterFeedback {
     var messageToDisplay: String
-    
 }
 
-final class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchmakerViewControllerDelegate {
+public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchmakerViewControllerDelegate {
     typealias CompletionBlock = (Error?) -> Void
 
     static var helper = GameCenterHelper()
@@ -203,7 +202,7 @@ final class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchm
         )
     }
     
-    func player(_ player: GKPlayer, wantsToQuitMatch match: GKTurnBasedMatch) {
+    public func player(_ player: GKPlayer, wantsToQuitMatch match: GKTurnBasedMatch) {
         let activeOthers = match.others.filter { other in
             return other.status == .active
         }
@@ -218,7 +217,7 @@ final class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchm
         )
     }
 
-    func player(_ player: GKPlayer, receivedTurnEventFor match: GKTurnBasedMatch, didBecomeActive: Bool) {
+    public func player(_ player: GKPlayer, receivedTurnEventFor match: GKTurnBasedMatch, didBecomeActive: Bool) {
         if let vc = currentMatchmakerVC {
             currentMatchmakerVC = nil
             vc.dismiss(animated: true)
@@ -232,12 +231,12 @@ final class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchm
         NotificationCenter.default.post(name: .presentGame, object: match)
     }
 
-    func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
+    public func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
         viewController.dismiss(animated: true)
     }
 
-    func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
-        print("Matchmaker vc did fail with error: \(error.localizedDescription).")
+    public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
+        print("Matchmaker vc \(viewController) did fail with error: \(error.localizedDescription).")
     }
 
 }

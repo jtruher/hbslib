@@ -121,38 +121,11 @@ public class CellularAutomata {
 
         for deltaX in -1...1 {
             for deltaY in -1...1 {
-                var cellX = deltaY + row
-                var cellY = deltaX + col
-
                 if deltaY == 0 && deltaX == 0 {
                     continue
                 }
                 
                 around += cellAt(row: row, col: col, offsetX: deltaX, offsetY: deltaY)
-
-//                handleCell(cellX: &cellX, cellY: &cellY, around: &around)
-
-//                if cellX < 0 || cellX >= grid.width {
-//                    if borderMode == .wrap {
-//                        cellX = (cellX + grid.width) % grid.width
-//                    } else if borderMode == .live {
-//                        around += 1
-//                        continue
-//                    }
-//                }
-//
-//                if cellY < 0 || cellY >= grid.height {
-//                    if borderMode == .wrap {
-//                        cellY = (cellY + grid.height) % grid.height
-//                    } else if borderMode == .live {
-//                        around += 1
-//                        continue
-//                    }
-//                }
-//
-//                if grid[cellX, cellY] != 0 {
-//                    around += 1
-//                }
             }
         }
 //        print("adding \(around) to \(row),\(col)")

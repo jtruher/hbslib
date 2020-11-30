@@ -42,7 +42,7 @@ public class Grid <Element> : Equatable where Element: Numeric, Element: Compara
     public func getLargestValue() -> Element? {
         return tiles.max()
     }
-
+    
     public func getLargestWithRange(_ extra: Int) -> (x: Int, y: Int) {
         let reduced: Set<Element> = Set(tiles.makeIterator())
         let sorted = Array(reduced.sorted().reversed())
