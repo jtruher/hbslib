@@ -32,6 +32,11 @@ public class CellularAutomata {
         grid.height
     }
     
+    public func loadCaveRules() {
+        rulesBirth = [6,7,8]
+        rulesSurvive = [3,4,5,6,7,8]
+    }
+    
     public init(width: Int, height: Int) {
         self.grid = Grid<Int>(width: width, height: height, sentinel: 0)
         self.gridBuffer = Grid<Int>(width: width, height: height, sentinel: 0)

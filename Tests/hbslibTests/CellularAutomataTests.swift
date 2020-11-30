@@ -162,4 +162,27 @@ class CellularAutomataTests: XCTestCase {
         }
     }
 
+    func testCavesAutomata() throws {
+        let automata = CellularAutomata(width: 24, height: 64)
+
+//        automata[1, 1] = 1
+        automata[2, 1] = 1
+        
+        automata.borderMode = .live
+        automata.loadCaveRules()
+        automata.fillPercent = 0.45
+        automata.resetRandom()
+        
+        print(automata)
+        automata.stepCells()
+        print(automata)
+
+        for _ in 1...50 {
+            automata.stepCells()
+        }
+        print(automata)
+
+    }
+
+    
 }
