@@ -47,23 +47,23 @@ class Game: Codable, GameCenterFeedback {
 public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchmakerViewControllerDelegate {
     typealias CompletionBlock = (Error?) -> Void
 
-    static var helper = GameCenterHelper()
+    public static var helper = GameCenterHelper()
 
-    static var isAuthenticated: Bool {
+    public static var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
 
-    var viewController: UIViewController?
-    var currentMatchmakerVC: GKTurnBasedMatchmakerViewController?
+    public var viewController: UIViewController?
+    public var currentMatchmakerVC: GKTurnBasedMatchmakerViewController?
 
     enum GameCenterHelperError: Error {
         case matchNotFound
     }
 
-    var currentMatch: GKTurnBasedMatch?
+    public var currentMatch: GKTurnBasedMatch?
     var currentBoard: Game?
 
-    var canTakeTurnForCurrentMatch: Bool {
+    public var canTakeTurnForCurrentMatch: Bool {
         guard let match = currentMatch else {
             return true
         }
@@ -71,11 +71,11 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
         return match.isLocalPlayersTurn
     }
 
-    var canStartNewMatch: Bool {
+    public var canStartNewMatch: Bool {
         return GameCenterHelper.isAuthenticated && matches.count < 5
     }
 
-    var matches = [GKTurnBasedMatch]()
+    public var matches = [GKTurnBasedMatch]()
 
     override init() {
         super.init()
