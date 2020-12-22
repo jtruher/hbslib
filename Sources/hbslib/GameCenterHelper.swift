@@ -33,14 +33,15 @@ import Foundation
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 import GameKit
+#if !os(macOS)
+import UIKit
 
 protocol GameCenterFeedback {
     var messageToDisplay: String { get set }
 }
 
-class Game: Codable, GameCenterFeedback {
+public class Game: Codable, GameCenterFeedback {
     var messageToDisplay: String
 }
 
@@ -61,7 +62,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
     }
 
     public var currentMatch: GKTurnBasedMatch?
-    var currentBoard: Game?
+    public var currentBoard: Game?
 
     public var canTakeTurnForCurrentMatch: Bool {
         guard let match = currentMatch else {
@@ -378,3 +379,4 @@ extension GKTurnBasedMatch  {
 
     }
 }
+#endif
