@@ -236,7 +236,7 @@ public extension String {
     }
     
     var titleized: String {
-        let SMALL_WORDS = ["a", "al", "y", "o", "la", "el", "las", "los", "de", "del"]
+        let SMALL_WORDS = ["a", "an", "and", "as", "at", "but", "by", "en", "for", "if", "in", "of", "on", "or", "the", "to", "v", "v.", "via", "vs", "vs."]
 
         var words = self.lowercased().split(separator: " ").map({ String($0)})
         words[0] = words[0].capitalized
