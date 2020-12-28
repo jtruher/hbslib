@@ -4,14 +4,14 @@ import UIKit
 public extension UIView {
     @available(iOS 9.0, *)
     func applyAutolayoutHugging() {
-        if let subview = self.superview {
+        if let parent = self.superview {
             self.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                self.topAnchor.constraint(equalTo: subview.topAnchor),
-                self.bottomAnchor.constraint(equalTo: subview.bottomAnchor),
-                self.leadingAnchor.constraint(equalTo: subview.leadingAnchor),
-                self.trailingAnchor.constraint(equalTo: subview.trailingAnchor)
+                self.topAnchor.constraint(equalTo: parent.topAnchor),
+                self.bottomAnchor.constraint(equalTo: parent.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: parent.trailingAnchor)
             ])
         }
     }
@@ -233,6 +233,19 @@ public extension String {
     func deletingSuffix(_ suffix: String) -> String {
         guard self.hasSuffix(suffix) else { return self }
         return String(self.dropLast(suffix.count))
+    }
+    
+    var titleized: String {
+        let SMALL_WORDS = ["a", "al", "y", "o", "la", "el", "las", "los", "de", "del"]
+
+        var words = self.lowercased().split(separator: " ").map({ String($0)})
+        words[0] = words[0].capitalized
+        for i in 1 ..< words.count {
+            if !SMALL_WORDS.contains(words[i]) {
+                words[i] = words[i].capitalized
+            }
+        }
+        return words.joined(separator: " ")
     }
 }
 
