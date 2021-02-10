@@ -45,9 +45,9 @@ public class Game: Codable, GameCenterFeedback {
     var messageToDisplay: String
 }
 
-public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchmakerViewControllerDelegate {
-    typealias CompletionBlock = (Error?) -> Void
+public typealias HBSCompletionBlock = (Error?) -> Void
 
+public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatchmakerViewControllerDelegate {
     public static var helper = GameCenterHelper()
 
     public static var isAuthenticated: Bool {
@@ -133,7 +133,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
     }
 
     // Not sure if this guy should own this or what
-    func loadMatches(_ completion: @escaping CompletionBlock) {
+    func loadMatches(_ completion: @escaping HBSCompletionBlock) {
         guard GameCenterHelper.isAuthenticated else { return }
 
         GKTurnBasedMatch.loadMatches { (matches, error) in
@@ -158,7 +158,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
 
     }
 
-    func endTurn(_ model: Game, completion: @escaping CompletionBlock) {
+    public func endTurn(_ model: Game, completion: @escaping HBSCompletionBlock) {
         guard let match = currentMatch else {
             completion(GameCenterHelperError.matchNotFound)
             return
@@ -178,7 +178,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
         }
     }
 
-    func win(_ model: Game, completion: @escaping CompletionBlock) {
+    func win(_ model: Game, completion: @escaping HBSCompletionBlock) {
         guard let match = currentMatch else {
             completion(GameCenterHelperError.matchNotFound)
             return
