@@ -41,7 +41,7 @@ protocol GameCenterFeedback {
     var messageToDisplay: String { get set }
 }
 
-public class Game: Codable, GameCenterFeedback {
+open class Game: Codable, GameCenterFeedback {
     var messageToDisplay: String
 }
 
@@ -100,7 +100,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
         }
     }
 
-    func buildGKMatchRequest(group: Int) -> GKMatchRequest {
+    public func buildGKMatchRequest(group: Int) -> GKMatchRequest {
         let request = GKMatchRequest()
 
         request.minPlayers = 2
@@ -111,7 +111,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
         return request
     }
 
-    func presentMatchmaker(group: Int) {
+    public func presentMatchmaker(group: Int) {
         guard GKLocalPlayer.local.isAuthenticated else {
             return
         }
@@ -133,7 +133,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
     }
 
     // Not sure if this guy should own this or what
-    func loadMatches(_ completion: @escaping HBSCompletionBlock) {
+    public func loadMatches(_ completion: @escaping HBSCompletionBlock) {
         guard GameCenterHelper.isAuthenticated else { return }
 
         GKTurnBasedMatch.loadMatches { (matches, error) in
@@ -178,7 +178,7 @@ public class GameCenterHelper: NSObject, GKLocalPlayerListener, GKTurnBasedMatch
         }
     }
 
-    func win(_ model: Game, completion: @escaping HBSCompletionBlock) {
+    public func win(_ model: Game, completion: @escaping HBSCompletionBlock) {
         guard let match = currentMatch else {
             completion(GameCenterHelperError.matchNotFound)
             return
