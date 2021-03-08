@@ -4,7 +4,7 @@ import UIKit
 #endif
 // swiftlint:disable all
 
-enum BackgroundImage : String, CaseIterable {
+public enum BackgroundImage : String, CaseIterable {
 
     case diagonalbrick, crisscross, box, eight, diagonal, heartshape, darkdots, themehighlight, darkgrid, nine, clown, scrolldots, seven, box_spark, one, jack, twobytwo, lightvertical, openpattern, pegyello, five, diamondshape, spaceysquares, shinning, queen, six, two, ace, twobytwoalpha, heartshapefat, spadeshape, zero, three, four, orbs, squigglebrick, depthbox, king, diamond, vertical, theme, clubshape, box_checked, ten, pegwhite
 
