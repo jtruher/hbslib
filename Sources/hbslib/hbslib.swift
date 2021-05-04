@@ -15,6 +15,61 @@ public extension UIView {
             ])
         }
     }
+    
+    @available(iOS 9.0, *)
+    func wobble() {
+        var values = [0.0]
+        
+        for i in 0...11 {
+            
+        }
+    }
+//
+//    - (void)wobble {
+//        NSMutableArray* newValues = [NSMutableArray arrayWithObject:@0];
+//
+//        float start = 0.075 + drand48() * 0.05;
+//
+//        NSInteger flip = -1;
+//        if (drand48() > 0.5) {
+//            flip = 1;
+//        }
+//
+//        for(int i = 1; i < 11; i++) {
+//            [newValues addObject:@(start / i * (i % 2 == 0 ? flip : -flip ) * 7 * (drand48()) / M_PI_2)];
+//        }
+//
+//        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
+//        animation.repeatCount = 1;
+//        animation.beginTime = CACurrentMediaTime();
+//    //    animation.beginTime = CACurrentMediaTime() + drand48() * 0.125;
+//        CGFloat duration = 0.57 + drand48() * 0.25;
+//        animation.duration = duration;
+//        animation.fillMode = kCAFillModeForwards;
+//        animation.values = newValues;
+//        //    animation.keyTimes = @[@0.0, @0.25, @, @0.66, @1.0];
+//        animation.removedOnCompletion = YES; // final stage is equal to starting stage
+//        animation.autoreverses = NO;
+//
+//        [self.imageView.layer addAnimation:animation forKey:@"wobble"];
+//        [self.darkShadow addAnimation:animation forKey:@"wobble"];
+//    //    [self.lightShadow addAnimation:animation forKey:@"wobble"];
+//
+//        [UIView animateWithDuration:0.225 animations:^{
+//            self.imageView.transform = CGAffineTransformMakeScale(1.15, 1.15);
+//            self.darkShadow.transform = CATransform3DMakeScale(1.15, 1.15, 1.0);
+//            self.lightShadow.transform = CATransform3DMakeScale(1.15, 1.15, 1.0);
+//        } completion:^(BOOL finished) {
+//            [UIView animateWithDuration:0.125 animations:^{
+//                self.imageView.transform = CGAffineTransformMakeScale(1, 1);
+//                self.darkShadow.transform = CATransform3DMakeScale(1, 1, 1.0);
+//                self.lightShadow.transform = CATransform3DMakeScale(1, 1, 1.0);
+//
+//            }];
+//        }];
+//    }
+
+    
 }
 
 public extension UIFont {

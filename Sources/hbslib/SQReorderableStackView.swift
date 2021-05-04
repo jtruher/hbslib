@@ -23,7 +23,7 @@ public protocol SQReorderableStackViewDelegate {
     @objc optional func stackView(_ stackView: SQReorderableStackView, didDragToReorderInForwardDirection forward: Bool, maxPoint: CGPoint, minPoint: CGPoint)
     
     /// didReorderArrangedSubviews - called when reordering ends only if the selected subview's index changed during reordering
-    @objc optional func stackViewDidReorderArrangedSubviews(_ stackView: SQReorderableStackView)
+    @objc optional func stackViewDidReorderArrangedSubviews(_ stackView: SQReorderableStackView, endIndex: Int)
     
     /// didEndReordering - called when reordering ends
     @objc optional func stackViewDidEndReordering(_ stackView: SQReorderableStackView)
@@ -119,8 +119,13 @@ public class SQReorderableStackView: UIStackView, UIGestureRecognizerDelegate {
     
     // MARK:- Reordering Methods
 
-    override public func addArrangedSubview(_ view: UIView) {
+    public override func addArrangedSubview(_ view: UIView) {
         super.addArrangedSubview(view)
+        addLongPressGestureRecognizerForReorderingToView(view)
+    }
+    
+    public override func insertArrangedSubview(_ view: UIView, at stackIndex: Int) {
+        super.insertArrangedSubview(view, at: stackIndex)
         addLongPressGestureRecognizerForReorderingToView(view)
     }
     
@@ -259,7 +264,7 @@ public class SQReorderableStackView: UIStackView, UIGestureRecognizerDelegate {
             reordering = false
             endIndex = indexOfArrangedSubview(actualView)
             if startIndex != endIndex {
-                reorderDelegate?.stackViewDidReorderArrangedSubviews?(self)
+                reorderDelegate?.stackViewDidReorderArrangedSubviews?(self, endIndex: endIndex)
             }
             reorderDelegate?.stackViewDidEndReordering?(self)
             
