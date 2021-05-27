@@ -13,15 +13,15 @@ public enum BackgroundImage : String, CaseIterable {
     }
 }
 // swiftlint:disable all
-extension BackgroundImage {
+public extension BackgroundImage {
 
-  #if !os(macOS)
+  #if os(iOS) || targetEnvironment(macCatalyst)
   var image : UIImage {
     return UIImage.convertBase64StringToImage(imageBase64String: base64)
   }
   #endif
   
-  var base64 : String {
+    var base64 : String {
     switch self {
 
 case .diagonalbrick:

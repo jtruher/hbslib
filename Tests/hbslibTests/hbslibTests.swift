@@ -1,5 +1,7 @@
 import XCTest
+#if !os(macOS)
 import UIKit
+#endif
 @testable import hbslib
 
 final class HBSLibTests: XCTestCase {
@@ -9,6 +11,8 @@ final class HBSLibTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
         XCTAssertEqual(HBSLib().text, "Hello, World!")
+
+        #if !os(macOS)
 
         let view = UIView()
         let outer = UIView()
@@ -20,12 +24,16 @@ final class HBSLibTests: XCTestCase {
 
         XCTAssertNotNil(UIColor.randomColor())
         XCTAssertNotEqual(UIColor.randomColor(), UIColor.randomColor())
+        #endif
+
     }
 
     @available(iOS 13.0, *)
     func testP3ColorRandom() {
+        #if !os(macOS)
         XCTAssertNotNil(UIColor.randomP3Color())
         XCTAssertNotEqual(UIColor.randomP3Color(), UIColor.randomP3Color())
+        #endif
     }
 
     func testGrid() {
